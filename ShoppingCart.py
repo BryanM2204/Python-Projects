@@ -63,6 +63,8 @@ class ShoppingCart:
         print('\nOUTPUT SHOPPING CART')
         print(f'{self.customer_name}\'s Shopping Cart - {self.current_date}')
         print(f'Number of Items: {ShoppingCart.get_num_items_in_cart(self)}\n')
+        if self.total_cost == 0:
+            print('SHOPPING CART IS EMPTY')
         print(f'\nTotal: ${ShoppingCart.get_cost_of_cart(self)}')
 
     #def print_descriptions(self):
@@ -78,7 +80,7 @@ class ShoppingCart:
         print('o - Output shopping cart')
         print('q - Quit')
         user_character = ''
-        user_character = input('\nChoose an option:')
+        user_character = input('\nChoose an option:\n')
         while user_character not in allowed_characters:
             user_character = input('Choose an option:\n')
             if user_character in allowed_characters:
