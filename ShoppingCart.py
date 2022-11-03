@@ -9,9 +9,6 @@ class ItemToPurchase:
     def print_item_cost(self):
         self.item_cost = self.item_price * self.item_quantity
         print(f'{self.item_name} {self.item_quantity} @ ${self.item_price} = ${self.item_cost}')
-    
-    def print_item_description(self):
-        print(f'{self.item_name}: {self.item_description}')
         
 class ShoppingCart:
     
@@ -29,24 +26,31 @@ class ShoppingCart:
         print()
         self.cart_items.append(ItemToPurchase(self.item_name, self.item_price, self.item_quantity, self.item_description))
 
-    def remove_item(self, item_name, cart_items):
+    def remove_item(self):
+        print('REMOVE ITEM FROM CART')
+        Selected_input = input('Enter name of item to remove:\n')
         for i in self.cart_items:
-            if i == item_name:
-                self.cart_items = cart_items.remove(item_name)
-                if i != item_name:
-                    continue
-            else:
-                print('Item not found in cart. Nothing removed.')
-    
-    def modify_item(self, item_quantity):
+            if i.item_name == Selected_input:
+                self.cart_items.remove(i)
+                print()
+                break
+        else:
+            print('Item not found in cart. Nothing removed.')
+            print()
+
+    def modify_item(self):
+        print('CHANGE ITEM QUANTITY')
+        alter_input = input('Enter the item name:\n')
+        new_quantity = int(input('Enter the new quantity:'))
         for i in self.cart_items:
-            if i == self.item_name:
-                
-                if i != self.item_name:
-                    continue
-            else: 
-                print('Item not found in cart. Nothing modified')
-    
+            if i.item_name == alter_input:
+                i.item_quantity = new_quantity
+                print()
+                break
+        else:
+            print('\nItem not found in cart. Nothing modified.')
+            print()
+
     def get_num_items_in_cart(self):
         total_items = 0
         for i in self.cart_items:
@@ -61,6 +65,7 @@ class ShoppingCart:
         
     def print_total(self):
         if self.get_num_items_in_cart() == 0:
+            print('OUTPUT SHOPPING CART')
             print(f'{self.customer_name}\'s Shopping Cart - {self.current_date}')
             print(f'Number of Items: {ShoppingCart.get_num_items_in_cart(self)}\n')
             print('SHOPPING CART IS EMPTY')
@@ -74,8 +79,13 @@ class ShoppingCart:
             print(f'\nTotal: ${ShoppingCart.get_cost_of_cart(self)}\n')
 
 
-    #def print_descriptions(self):
-        #print(self.item_description)
+    def print_descriptions(self):
+        print('OUTPUT ITEMS\' DESCRIPTIONS')
+        print(f'{self.customer_name}\'s Shopping Cart - {self.current_date}')
+        print(f'\nItem Descriptions')
+        for i in self.cart_items:
+            print(f'{i.item_name}: {i.item_description}')
+        print()
     
     def print_menu(self, user_cart):
         allowed_characters = ['a', 'r', 'c', 'i', 'o', 'q']
@@ -101,10 +111,25 @@ class ShoppingCart:
         if user_character == 'a':
             user_cart.add_item()
             self.print_menu(user_cart)
+        
+        elif user_character == 'r':
+            self.remove_item()
+            self.print_menu(user_cart)
+
+        elif user_character == 'c':
+            self.modify_item()
+            self.print_menu(user_cart)
+
+        elif user_character == 'i':
+            self.print_descriptions()
+            self.print_menu(user_cart)
 
         elif user_character == 'o':
             self.print_total()
             self.print_menu(user_cart)
+
+        elif user_character == 'q':
+            return
 
 if __name__ == "__main__":
     
