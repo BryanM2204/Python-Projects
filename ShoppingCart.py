@@ -26,6 +26,7 @@ class ShoppingCart:
         print()
         self.cart_items.append(ItemToPurchase(self.item_name, self.item_price, self.item_quantity, self.item_description))
 
+
     def remove_item(self):
         print('REMOVE ITEM FROM CART')
         Selected_input = input('Enter name of item to remove:\n')
@@ -87,7 +88,7 @@ class ShoppingCart:
             print(f'{i.item_name}: {i.item_description}')
         print()
     
-    def print_menu(self, user_cart):
+    def print_menu(self, my_cart):
         allowed_characters = ['a', 'r', 'c', 'i', 'o', 'q']
         print('MENU')
         print('a - Add item to cart')
@@ -103,30 +104,30 @@ class ShoppingCart:
             if user_character in allowed_characters:
                 break
         print()
-        self.execute_menu(user_character, user_cart)
+        self.execute_menu(user_character, my_cart)
         
                 
-    def execute_menu(self, user_character, user_cart):
+    def execute_menu(self, user_character, my_cart):
 
         if user_character == 'a':
-            user_cart.add_item()
-            self.print_menu(user_cart)
+            self.add_item()
+            self.print_menu(my_cart)
         
         elif user_character == 'r':
             self.remove_item()
-            self.print_menu(user_cart)
+            self.print_menu(my_cart)
 
         elif user_character == 'c':
             self.modify_item()
-            self.print_menu(user_cart)
+            self.print_menu(my_cart)
 
         elif user_character == 'i':
             self.print_descriptions()
-            self.print_menu(user_cart)
+            self.print_menu(my_cart)
 
         elif user_character == 'o':
             self.print_total()
-            self.print_menu(user_cart)
+            self.print_menu(my_cart)
 
         elif user_character == 'q':
             return
@@ -138,8 +139,8 @@ if __name__ == "__main__":
     print(f'\nCustomer name: {customer_name}')
     print(f'Today\'s date: {current_date}\n')
 
-    user_cart = ShoppingCart(customer_name, current_date)
-    user_cart.print_menu(user_cart)
+    my_cart = ShoppingCart(customer_name, current_date)
+    my_cart.print_menu(my_cart)
     
     
     
