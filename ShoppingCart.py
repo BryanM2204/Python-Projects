@@ -12,24 +12,16 @@ class ItemToPurchase:
         
 class ShoppingCart:
     
-    def __init__(self, customer_name='none', current_date='January 1, 2016', cart_items=[]):
+    def __init__(self, customer_name="none", current_date='January 1, 2016', cart_items=[]):
         self.customer_name = customer_name
         self.current_date = current_date
         self.cart_items = cart_items
     
-    def add_item(self):
-        print('ADD ITEM TO CART')
-        self.item_name = input('Enter the item name:\n')
-        self.item_description = input('Enter the item description:\n')
-        self.item_price = int(input('Enter the item price:\n'))
-        self.item_quantity = int(input('Enter the item quantity:\n'))
-        print()
-        self.cart_items.append(ItemToPurchase(self.item_name, self.item_price, self.item_quantity, self.item_description))
+    def add_item(self, item_to_purchase):
+        self.cart_items.append(item_to_purchase)
 
 
-    def remove_item(self):
-        print('REMOVE ITEM FROM CART')
-        Selected_input = input('Enter name of item to remove:\n')
+    def remove_item(self, Selected_input):
         for i in self.cart_items:
             if i.item_name == Selected_input:
                 self.cart_items.remove(i)
@@ -88,49 +80,61 @@ class ShoppingCart:
             print(f'{i.item_name}: {i.item_description}')
         print()
     
-    def print_menu(self, my_cart):
-        allowed_characters = ['a', 'r', 'c', 'i', 'o', 'q']
-        print('MENU')
-        print('a - Add item to cart')
-        print('r - Remove item from cart')
-        print('c - Change item quantity')
-        print('i - Output items\' descriptions')
-        print('o - Output shopping cart')
-        print('q - Quit')
-        user_character = ''
+def print_menu():
+    allowed_characters = ['a', 'r', 'c', 'i', 'o', 'q']
+    print('MENU')
+    print('a - Add item to cart')
+    print('r - Remove item from cart')
+    print('c - Change item quantity')
+    print('i - Output items\' descriptions')
+    print('o - Output shopping cart')
+    print('q - Quit')
+    user_character = ''
+    user_character = input('\nChoose an option:')
+    while user_character not in allowed_characters:
         user_character = input('\nChoose an option:')
-        while user_character not in allowed_characters:
-            user_character = input('\nChoose an option:')
-            if user_character in allowed_characters:
-                break
+        if user_character in allowed_characters:
+            break
+    print()
+    execute_menu(user_character)                           
+
+def execute_menu(user_character):
+    item_to_purchase = ItemToPurchase()
+    if user_character == 'a':
+        print('ADD ITEM TO CART')
+        item_name = str(input('Enter the item name:\n'))
+        item_description = str(input('Enter the item description:\n'))
+        item_price = int(input('Enter the item price:\n'))
+        item_quantity = int(input('Enter the item quantity:\n'))
+        item_to_purchase = ItemToPurchase(item_name, item_price, item_quantity, item_description)
         print()
-        self.execute_menu(user_character, my_cart)
-        
-                
-    def execute_menu(self, user_character, my_cart):
+        my_cart.add_item(item_to_purchase)
+        print_menu()
+    
+    elif user_character == 'r':
+        print('REMOVE ITEM FROM CART')
+        Selected_input = input('Enter name of item to remove:\n')
+        my_cart.remove_item(Selected_input)
+        print_menu()
 
-        if user_character == 'a':
-            self.add_item()
-            self.print_menu(my_cart)
-        
-        elif user_character == 'r':
-            self.remove_item()
-            self.print_menu(my_cart)
 
-        elif user_character == 'c':
-            self.modify_item()
-            self.print_menu(my_cart)
+    elif user_character == 'c':
+        my_cart.modify_item()
+        print_menu()
+       
 
-        elif user_character == 'i':
-            self.print_descriptions()
-            self.print_menu(my_cart)
+    elif user_character == 'i':
+        my_cart.print_descriptions()
+        print_menu()
 
-        elif user_character == 'o':
-            self.print_total()
-            self.print_menu(my_cart)
 
-        elif user_character == 'q':
-            return
+    elif user_character == 'o':
+        my_cart.print_total()
+        print_menu()
+
+
+    elif user_character == 'q':
+        return
 
 if __name__ == "__main__":
     
@@ -140,7 +144,7 @@ if __name__ == "__main__":
     print(f'Today\'s date: {current_date}\n')
 
     my_cart = ShoppingCart(customer_name, current_date)
-    my_cart.print_menu(my_cart)
+    print_menu()
     
     
     
